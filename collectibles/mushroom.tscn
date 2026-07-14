@@ -14,6 +14,14 @@ height = 0.18
 [sub_resource type="SphereShape3D" id="SphereShape3D_rm7dq"]
 radius = 0.6
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rm7dq"]
+emission_shape = 1
+emission_sphere_radius = 0.2
+gravity = Vector3(0, -0.02, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_seaco"]
+size = Vector2(0.025, 0.025)
+
 [node name="Mushroom" type="Node3D" unique_id=1845023077]
 script = ExtResource("1_a5yys")
 
@@ -33,3 +41,11 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=750962353]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("SphereShape3D_rm7dq")
+
+[node name="Sparkles" type="GPUParticles3D" parent="." unique_id=1117867192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+amount = 4
+lifetime = 1.2
+randomness = 0.7
+process_material = SubResource("ParticleProcessMaterial_rm7dq")
+draw_pass_1 = SubResource("QuadMesh_seaco")
