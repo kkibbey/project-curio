@@ -11,6 +11,7 @@ extends CharacterBody3D
 var last_safe_position: Vector3
 var air_jump_available: bool = true
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+var ignore_next_mouse_motion: bool = true
 
 @onready var camera_rig: Node3D = $CameraRig
 
@@ -22,6 +23,10 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
+		if ignore_next_mouse_motion:
+			ignore_next_mouse_motion = false
+			return
+
 		rotate_y(-event.relative.x * mouse_sensitivity)
 
 		camera_rig.rotate_x(-event.relative.y * mouse_sensitivity)
