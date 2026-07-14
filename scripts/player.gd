@@ -5,14 +5,19 @@ extends CharacterBody3D
 @export var jump_velocity: float = 7.5
 @export var air_jump_velocity: float = 6.5
 @export var gravity_multiplier: float = 1.6
+@export var fall_limit: float = -50.0
+@export var respawn_height_offset: float = 0.5
 
+var last_safe_position: Vector3
 var air_jump_available: bool = true
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @onready var camera_rig: Node3D = $CameraRig
 
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	last_safe_position = global_position
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -31,18 +36,17 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-
 	if not is_on_floor():
 		velocity.y -= gravity * gravity_multiplier * delta
 
 	if is_on_floor():
 		air_jump_available = true
+		last_safe_position = global_position
 
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y = jump_velocity
 		elif air_jump_available:
-			velocity.y = max(velocity.y, 0.0)
 			velocity.y = air_jump_velocity
 			air_jump_available = false
 
@@ -64,4 +68,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, move_speed)
 		velocity.z = move_toward(velocity.z, 0.0, move_speed)
 
+	if global_position.y < fall_limit:
+		respawn()
+
 	move_and_slide()
+
+
+func respawn() -> void:
+	global_position = last_safe_position + Vector3.UP * respawn_height_offset
+	velocity = Vector3.ZERO
