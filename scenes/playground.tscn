@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://mdqkw864eq44" path="res://scenes/player.tscn" id="1_hddm4"]
 [ext_resource type="PackedScene" uid="uid://qew8tw4dd4f5" path="res://scenes/platform.tscn" id="2_qchbg"]
 [ext_resource type="PackedScene" uid="uid://dsbqga0ys7nl5" path="res://collectibles/mushroom.tscn" id="3_kddj0"]
+[ext_resource type="Script" uid="uid://hxwp21qu6gd" path="res://scenes/ui.gd" id="4_q8s1k"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rm7dq"]
 size = Vector3(20, 0.5, 20)
@@ -60,3 +61,32 @@ shape = SubResource("BoxShape3D_d1cij")
 
 [node name="Mushroom" parent="." unique_id=1845023077 instance=ExtResource("3_kddj0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.90728, -4.7887974, 3.4114876)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1336957310 groups=["game_ui"]]
+script = ExtResource("4_q8s1k")
+
+[node name="FoundPopup" type="PanelContainer" parent="UI" unique_id=1166156858]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -196.0
+offset_top = 40.0
+offset_right = 224.0
+offset_bottom = 143.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/FoundPopup" unique_id=558539450]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Label" type="Label" parent="UI/FoundPopup/MarginContainer" unique_id=451296265]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "New Discovery! 
+Red Cap Mushroom"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -76,6 +76,9 @@ func collect() -> void:
 		return
 
 	collected = true
+	var ui := get_tree().get_first_node_in_group("game_ui")
+	if ui:
+		ui.show_found_item("Red Cap Mushroom")
 
 	var tween := create_tween()
 	tween.set_parallel(true)

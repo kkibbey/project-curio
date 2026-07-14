@@ -20,7 +20,7 @@ emission_sphere_radius = 0.2
 gravity = Vector3(0, -0.02, 0)
 
 [sub_resource type="QuadMesh" id="QuadMesh_seaco"]
-size = Vector2(0.025, 0.025)
+size = Vector2(0.055, 0.055)
 
 [node name="Mushroom" type="Node3D" unique_id=1845023077]
 script = ExtResource("1_a5yys")
@@ -44,7 +44,7 @@ shape = SubResource("SphereShape3D_rm7dq")
 
 [node name="Sparkles" type="GPUParticles3D" parent="." unique_id=1117867192]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
-amount = 4
+amount = 12
 lifetime = 1.2
 randomness = 0.7
 process_material = SubResource("ParticleProcessMaterial_rm7dq")
