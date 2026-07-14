@@ -14,7 +14,8 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var ignore_next_mouse_motion: bool = true
 
 @onready var camera_rig: Node3D = $CameraRig
-
+@onready var visuals: Node3D = $Visuals
+@onready var spring_arm: SpringArm3D = $CameraRig/SpringArm3D
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -27,13 +28,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			ignore_next_mouse_motion = false
 			return
 
-		rotate_y(-event.relative.x * mouse_sensitivity)
+		camera_rig.rotate_y(-event.relative.x * mouse_sensitivity)
 
-		camera_rig.rotate_x(-event.relative.y * mouse_sensitivity)
-		camera_rig.rotation.x = clamp(
-			camera_rig.rotation.x,
-			deg_to_rad(-65.0),
-			deg_to_rad(45.0)
+		spring_arm.rotate_x(-event.relative.y * mouse_sensitivity)
+		spring_arm.rotation.x = clamp(
+			spring_arm.rotation.x,
+			deg_to_rad(-45.0),
+			deg_to_rad(55.0)
 		)
 
 	if event.is_action_pressed("ui_cancel"):
@@ -62,13 +63,26 @@ func _physics_process(delta: float) -> void:
 		"move_backward"
 	)
 
+	var camera_basis := camera_rig.global_transform.basis
+
+	var forward := -camera_basis.z
+	var right := camera_basis.x
+
+	forward.y = 0.0
+	right.y = 0.0
+
+	forward = forward.normalized()
+	right = right.normalized()
+
 	var direction := (
-		transform.basis * Vector3(input_direction.x, 0.0, input_direction.y)
+		right * input_direction.x +
+		forward * -input_direction.y
 	).normalized()
 
 	if direction:
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
+		visuals.rotation.y = atan2(-direction.x, -direction.z)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, move_speed)
 		velocity.z = move_toward(velocity.z, 0.0, move_speed)
