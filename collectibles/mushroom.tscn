@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dsbqga0ys7nl5"]
+
+[ext_resource type="Script" uid="uid://ceq3lgw6bjp0l" path="res://collectibles/mushroom.gd" id="1_a5yys"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rm7dq"]
+top_radius = 0.07
+bottom_radius = 0.09
+height = 0.35
+
+[sub_resource type="SphereMesh" id="SphereMesh_seaco"]
+radius = 0.18
+height = 0.18
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rm7dq"]
+radius = 0.6
+
+[node name="Mushroom" type="Node3D" unique_id=1845023077]
+script = ExtResource("1_a5yys")
+
+[node name="Visuals" type="Node3D" parent="." unique_id=347928923]
+
+[node name="Stem" type="MeshInstance3D" parent="Visuals" unique_id=1914514843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.175, 0)
+mesh = SubResource("CylinderMesh_rm7dq")
+
+[node name="Cap" type="MeshInstance3D" parent="Visuals" unique_id=359733271]
+transform = Transform3D(1.3467115, -0.045341704, 0, 0.09417123, 0.64841664, 0, 0, 0, 1.35, 0, 0.39, 0)
+mesh = SubResource("SphereMesh_seaco")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1791174473]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=750962353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("SphereShape3D_rm7dq")

@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://mdqkw864eq44" path="res://scenes/player.tscn" id="1_hddm4"]
 [ext_resource type="PackedScene" uid="uid://qew8tw4dd4f5" path="res://scenes/platform.tscn" id="2_qchbg"]
+[ext_resource type="PackedScene" uid="uid://dsbqga0ys7nl5" path="res://collectibles/mushroom.tscn" id="3_kddj0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rm7dq"]
 size = Vector3(20, 0.5, 20)
@@ -56,3 +57,6 @@ mesh = SubResource("BoxMesh_seaco")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallTest" unique_id=1519129552]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 3, 0)
 shape = SubResource("BoxShape3D_d1cij")
+
+[node name="Mushroom" parent="." unique_id=1845023077 instance=ExtResource("3_kddj0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.90728, -4.7887974, 3.4114876)
