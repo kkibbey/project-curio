@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://ccm1otwmgol3k"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rm7dq"]
+top_radius = 0.35
+bottom_radius = 0.4
+height = 3.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_seaco"]
+radius = 0.4
+height = 3.0
+
+[node name="Log" type="StaticBody3D" unique_id=1102686436]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1198642393]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_rm7dq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1937954209]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_seaco")
