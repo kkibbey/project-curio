@@ -33,7 +33,7 @@ emission_enabled = true
 material = SubResource("StandardMaterial3D_epbj0")
 size = Vector2(0.055, 0.055)
 
-[node name="Glowcap" type="Node3D" unique_id=1845023077]
+[node name="Glowcap" type="Node3D" unique_id=1845023077 groups=["interactable"]]
 script = ExtResource("1_n34pd")
 item_name = "Glowcap Mushroom"
 

@@ -74,7 +74,7 @@ mesh = SubResource("BoxMesh_seaco")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 3, 0)
 shape = SubResource("BoxShape3D_d1cij")
 
-[node name="Mushroom" parent="." unique_id=1845023077 instance=ExtResource("3_kddj0")]
+[node name="Mushroom" parent="." unique_id=1985595562 instance=ExtResource("3_kddj0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.90728, -4.7887974, 3.4114876)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1336957310 groups=["game_ui"]]
@@ -125,7 +125,7 @@ transform = Transform3D(0.935, 0, 0, 0, 0.935, 0, 0, 0, 0.935, 0.44145012, 0.25,
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -8.794335, 0.25, 1.951549)
 
 [node name="Tree7" parent="." unique_id=990514383 instance=ExtResource("5_mm0a5")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 2.8218222, 0.25, 5.331181)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 7.413847, 0.25, 4.299911)
 
 [node name="Tree8" parent="." unique_id=1919473848 instance=ExtResource("5_mm0a5")]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0.7142142, 0.25, 9.190087)

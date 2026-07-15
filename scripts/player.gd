@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var gravity_multiplier: float = 1.6
 @export var fall_limit: float = -50.0
 @export var respawn_height_offset: float = 0.5
+@export var interaction_distance: float = 2.0
 
 var last_safe_position: Vector3
 var air_jump_available: bool = true
@@ -36,9 +37,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			deg_to_rad(-45.0),
 			deg_to_rad(55.0)
 		)
-
+		
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	if event.is_action_pressed("interact"):
+		_interact_with_nearest()
 
 
 func _physics_process(delta: float) -> void:
@@ -92,6 +96,24 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+func _interact_with_nearest() -> void:
+	var nearest_interactable: Node3D = null
+	var nearest_distance: float = INF
+
+	for interactable in get_tree().get_nodes_in_group("interactable"):
+		if not interactable is Node3D:
+			continue
+
+		var distance := global_position.distance_to(
+			interactable.global_position
+		)
+
+		if distance <= interaction_distance and distance < nearest_distance:
+			nearest_interactable = interactable
+			nearest_distance = distance
+
+	if nearest_interactable and nearest_interactable.has_method("interact"):
+		nearest_interactable.interact()
 
 func respawn() -> void:
 	global_position = last_safe_position + Vector3.UP * respawn_height_offset
