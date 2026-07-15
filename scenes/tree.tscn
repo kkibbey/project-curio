@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ds8vabn6xqdta"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rm7dq"]
+top_radius = 0.15
+bottom_radius = 0.2
+height = 2.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_seaco"]
+radius = 0.9
+
+[node name="Tree" type="Node3D" unique_id=1655597904]
+
+[node name="Trunk" type="MeshInstance3D" parent="." unique_id=763230962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_rm7dq")
+
+[node name="Leaves" type="MeshInstance3D" parent="." unique_id=911690234]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+mesh = SubResource("SphereMesh_seaco")

@@ -11,6 +11,8 @@ extends Node3D
 @onready var visuals: Node3D = $Visuals
 @onready var interaction_area: Area3D = $Area3D
 
+@export var item_name := "Red Cap Mushroom"
+
 var player_in_range: bool = false
 var collected: bool = false
 
@@ -78,7 +80,7 @@ func collect() -> void:
 	collected = true
 	var ui := get_tree().get_first_node_in_group("game_ui")
 	if ui:
-		ui.show_found_item("Red Cap Mushroom")
+		ui.show_found_item(item_name)
 
 	var tween := create_tween()
 	tween.set_parallel(true)

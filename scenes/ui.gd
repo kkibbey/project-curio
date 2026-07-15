@@ -3,7 +3,6 @@ extends CanvasLayer
 @onready var found_popup: PanelContainer = $FoundPopup
 @onready var found_label: Label = $FoundPopup/MarginContainer/Label
 
-
 func show_found_item(item_name: String) -> void:
 	found_label.text = "New Discovery!\n" + item_name
 	found_popup.visible = true
