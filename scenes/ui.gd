@@ -2,6 +2,8 @@ extends CanvasLayer
 
 @onready var found_popup: PanelContainer = $FoundPopup
 @onready var found_label: Label = $FoundPopup/MarginContainer/Label
+@onready var interaction_prompt: PanelContainer = $InteractionPrompt
+@onready var prompt_label: Label = $InteractionPrompt/MarginContainer/PromptLabel
 
 func show_popup(message: String) -> void:
 	found_label.text = message
@@ -25,3 +27,11 @@ func show_popup(message: String) -> void:
 
 	await tween.finished
 	found_popup.visible = false
+
+func show_interaction_prompt(action_text: String) -> void:
+	prompt_label.text = "[E]\n" + action_text
+	interaction_prompt.visible = true
+
+
+func hide_interaction_prompt() -> void:
+	interaction_prompt.visible = false

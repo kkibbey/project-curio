@@ -11,12 +11,16 @@ extends CharacterBody3D
 
 var last_safe_position: Vector3
 var air_jump_available: bool = true
-var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity: float = ProjectSettings.get_setting(
+	"physics/3d/default_gravity"
+)
 var ignore_next_mouse_motion: bool = true
+var current_interactable: Node3D = null
 
 @onready var camera_rig: Node3D = $CameraRig
 @onready var visuals: Node3D = $Visuals
 @onready var spring_arm: SpringArm3D = $CameraRig/SpringArm3D
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -29,23 +33,30 @@ func _unhandled_input(event: InputEvent) -> void:
 			ignore_next_mouse_motion = false
 			return
 
-		camera_rig.rotate_y(-event.relative.x * mouse_sensitivity)
+		camera_rig.rotate_y(
+			-event.relative.x * mouse_sensitivity
+		)
 
-		spring_arm.rotate_x(-event.relative.y * mouse_sensitivity)
+		spring_arm.rotate_x(
+			-event.relative.y * mouse_sensitivity
+		)
+
 		spring_arm.rotation.x = clamp(
 			spring_arm.rotation.x,
 			deg_to_rad(-45.0),
 			deg_to_rad(55.0)
 		)
-		
+
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
+
 	if event.is_action_pressed("interact"):
-		_interact_with_nearest()
+		_interact_with_current()
 
 
 func _physics_process(delta: float) -> void:
+	_update_interaction_prompt()
+
 	if not is_on_floor():
 		velocity.y -= gravity * gravity_multiplier * delta
 
@@ -86,35 +97,92 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
-		visuals.rotation.y = atan2(-direction.x, -direction.z)
+		visuals.rotation.y = atan2(
+			-direction.x,
+			-direction.z
+		)
 	else:
-		velocity.x = move_toward(velocity.x, 0.0, move_speed)
-		velocity.z = move_toward(velocity.z, 0.0, move_speed)
+		velocity.x = move_toward(
+			velocity.x,
+			0.0,
+			move_speed
+		)
+		velocity.z = move_toward(
+			velocity.z,
+			0.0,
+			move_speed
+		)
 
 	if global_position.y < fall_limit:
 		respawn()
 
 	move_and_slide()
 
-func _interact_with_nearest() -> void:
+
+func get_nearest_interactable() -> Node3D:
 	var nearest_interactable: Node3D = null
 	var nearest_distance: float = INF
 
-	for interactable in get_tree().get_nodes_in_group("interactable"):
+	for interactable in get_tree().get_nodes_in_group(
+		"interactable"
+	):
 		if not interactable is Node3D:
+			continue
+
+		if not is_instance_valid(interactable):
 			continue
 
 		var distance := global_position.distance_to(
 			interactable.global_position
 		)
 
-		if distance <= interaction_distance and distance < nearest_distance:
+		if (
+			distance <= interaction_distance
+			and distance < nearest_distance
+		):
 			nearest_interactable = interactable
 			nearest_distance = distance
 
-	if nearest_interactable and nearest_interactable.has_method("interact"):
-		nearest_interactable.interact()
+	return nearest_interactable
+
+
+func _update_interaction_prompt() -> void:
+	current_interactable = get_nearest_interactable()
+
+	var ui := get_tree().get_first_node_in_group("game_ui")
+
+	if not ui:
+		return
+
+	if current_interactable:
+		ui.show_interaction_prompt(current_interactable.interaction_text)
+	else:
+		ui.hide_interaction_prompt()
+
+
+func _interact_with_current() -> void:
+	if not is_instance_valid(current_interactable):
+		return
+
+	if not current_interactable.has_method("interact"):
+		return
+
+	current_interactable.interact()
+
+	current_interactable = null
+
+	var ui := get_tree().get_first_node_in_group(
+		"game_ui"
+	)
+
+	if ui:
+		ui.hide_interaction_prompt()
+
 
 func respawn() -> void:
-	global_position = last_safe_position + Vector3.UP * respawn_height_offset
+	global_position = (
+		last_safe_position
+		+ Vector3.UP * respawn_height_offset
+	)
+
 	velocity = Vector3.ZERO

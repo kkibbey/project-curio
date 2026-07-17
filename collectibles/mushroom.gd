@@ -2,21 +2,20 @@ extends Node3D
 
 @export var collect_lift_height: float = 1.0
 @export var collect_duration: float = 0.45
-
 @export var wiggle_interval_min: float = 3.0
 @export var wiggle_interval_max: float = 7.0
 @export var wiggle_angle: float = 4.0
 @export var wiggle_duration: float = 0.12
 
+@export var item_id: String = "red_cap_mushroom"
+@export var item_name: String = "Red Cap Mushroom"
+@export var interaction_text: String = "Pick Mushroom"
+
 @onready var visuals: Node3D = $Visuals
 @onready var interaction_area: Area3D = $Area3D
 
-@export var item_id: String = "red_cap_mushroom"
-@export var item_name: String = "Red Cap Mushroom"
-
 var player_in_range: bool = false
 var collected: bool = false
-
 
 func _ready() -> void:
 	interaction_area.body_entered.connect(_on_body_entered)
@@ -78,6 +77,9 @@ func collect() -> void:
 		return
 
 	collected = true
+	interaction_area.monitoring = false
+	interaction_area.monitorable = false
+	remove_from_group("interactable")
 
 	var ui := get_tree().get_first_node_in_group("game_ui")
 	var is_new_discovery := CollectionManager.discover(item_id)

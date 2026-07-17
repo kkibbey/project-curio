@@ -4,6 +4,7 @@ extends Node3D
 @export_range(2, 5) var catches_remaining: int = 3
 
 @export var test_fish_name: String = "Pond Minnow"
+@export var interaction_text: String = "Fish"
 
 @onready var interaction_area: Area3D = $Area3D
 
