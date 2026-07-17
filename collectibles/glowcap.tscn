@@ -35,6 +35,7 @@ size = Vector2(0.055, 0.055)
 
 [node name="Glowcap" type="Node3D" unique_id=1845023077 groups=["interactable"]]
 script = ExtResource("1_n34pd")
+item_id = "glowcap_mushroom"
 item_name = "Glowcap Mushroom"
 
 [node name="Visuals" type="Node3D" parent="." unique_id=347928923]

@@ -11,7 +11,8 @@ extends Node3D
 @onready var visuals: Node3D = $Visuals
 @onready var interaction_area: Area3D = $Area3D
 
-@export var item_name := "Red Cap Mushroom"
+@export var item_id: String = "red_cap_mushroom"
+@export var item_name: String = "Red Cap Mushroom"
 
 var player_in_range: bool = false
 var collected: bool = false
@@ -77,9 +78,15 @@ func collect() -> void:
 		return
 
 	collected = true
+
 	var ui := get_tree().get_first_node_in_group("game_ui")
+	var is_new_discovery := CollectionManager.discover(item_id)
+
 	if ui:
-		ui.show_popup("New Discovery!\n" + item_name)
+		if is_new_discovery:
+			ui.show_popup("New Discovery!\n" + item_name)
+		else:
+			ui.show_popup(item_name + " collected!")
 
 	var tween := create_tween()
 	tween.set_parallel(true)
@@ -107,5 +114,5 @@ func collect() -> void:
 
 	await tween.finished
 
-	print("Collected Red Cap Mushroom")
+	print("Collected ", item_name)
 	queue_free()
