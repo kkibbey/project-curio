@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://q3tcuc7hayiq" path="res://collectibles/glowcap.tscn" id="6_o6wi6"]
 [ext_resource type="PackedScene" uid="uid://ccm1otwmgol3k" path="res://scenes/log.tscn" id="7_emj6c"]
 [ext_resource type="PackedScene" uid="uid://blycqg6nbncik" path="res://scenes/fishing_ripple.tscn" id="8_mrac1"]
+[ext_resource type="PackedScene" uid="uid://1h7luuwqgxul" path="res://scenes/fishing_minigame.tscn" id="9_2q4k0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rm7dq"]
 size = Vector3(20, 0.5, 20)
@@ -222,3 +223,5 @@ transform = Transform3D(0.9340152, 0, 0.3572331, 0, 1, 0, -0.3572331, 0, 0.93401
 
 [node name="FishingRipple" parent="." unique_id=491645407 instance=ExtResource("8_mrac1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5363922, 0.26999998, 3.209821)
+
+[node name="FishingMinigame" parent="." unique_id=204449544 groups=["fishing_minigame"] instance=ExtResource("9_2q4k0")]

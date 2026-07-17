@@ -51,6 +51,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 	if event.is_action_pressed("interact"):
+		var minigame := get_tree().get_first_node_in_group(
+			"fishing_minigame"
+		)
+
+		if minigame and minigame.active:
+			return
+
 		_interact_with_current()
 
 

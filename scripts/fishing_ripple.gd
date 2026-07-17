@@ -10,6 +10,7 @@ extends Node3D
 
 var fishing_in_progress: bool = false
 var discovered: bool = false
+var active_minigame: Node = null
 
 func show_discovery() -> void:
 	if discovered:
@@ -39,23 +40,57 @@ func _on_body_entered(body: Node3D) -> void:
 			ui.show_popup("Fishing spot discovered!")
 
 func interact() -> void:
-	if not discovered:
-		show_discovery()
+	if fishing_in_progress:
 		return
 
-	if fishing_in_progress or catches_remaining <= 0:
+	if catches_remaining <= 0:
 		return
 
 	_start_fishing()
 
-
 func _start_fishing() -> void:
+	if fishing_in_progress:
+		return
+
+	var minigame := get_tree().get_first_node_in_group("fishing_minigame")
+
+	if not minigame:
+		push_warning("No fishing minigame found.")
+		return
+
 	fishing_in_progress = true
-	# open minigame here
-	# success -> _complete_catch()
-	# failure -> show "It got away!"
+	active_minigame = minigame
+
+	remove_from_group("interactable")
+
+	minigame.succeeded.connect(
+		_on_fishing_succeeded,
+		CONNECT_ONE_SHOT
+	)
+
+	minigame.failed.connect(
+		_on_fishing_failed,
+		CONNECT_ONE_SHOT
+	)
+
+	minigame.start()
+
+func _on_fishing_succeeded() -> void:
+	active_minigame = null
 	_complete_catch()
 
+
+func _on_fishing_failed() -> void:
+	active_minigame = null
+	fishing_in_progress = false
+
+	var ui := get_tree().get_first_node_in_group("game_ui")
+
+	if ui:
+		ui.show_popup("It got away!")
+
+	if catches_remaining > 0:
+		add_to_group("interactable")
 
 func _complete_catch() -> void:
 	catches_remaining -= 1
@@ -70,6 +105,8 @@ func _complete_catch() -> void:
 
 	if catches_remaining <= 0:
 		_deplete()
+	else:
+		add_to_group("interactable")
 
 
 func _deplete() -> void:

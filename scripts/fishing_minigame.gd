@@ -11,11 +11,10 @@ signal failed
 
 var marker_direction: float = 1.0
 var active: bool = false
-
+var accepting_input: bool = false
 
 func _ready() -> void:
 	visible = false
-	start()
 
 func _process(delta: float) -> void:
 	if not active:
@@ -34,20 +33,24 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not active:
+	if not active or not accepting_input:
 		return
 
 	if event.is_action_pressed("interact"):
+		accepting_input = false
 		_check_result()
 		get_viewport().set_input_as_handled()
-
 
 func start() -> void:
 	visible = true
 	active = true
+	accepting_input = false
 	marker_direction = 1.0
 	moving_marker.position.x = 0.0
 
+	await get_tree().process_frame
+
+	accepting_input = true
 
 func _check_result() -> void:
 	active = false
