@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://blycqg6nbncik"]
+
+[ext_resource type="Script" uid="uid://c32u7yy765qok" path="res://scripts/fishing_ripple.gd" id="1_hkrh1"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_y6f4v"]
+inner_radius = 0.35
+outer_radius = 0.45
+
+[sub_resource type="TorusMesh" id="TorusMesh_hkrh1"]
+inner_radius = 0.15
+outer_radius = 0.22
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wvobx"]
+radius = 1.0
+
+[node name="FishingRipple" type="Node3D" unique_id=491645407 groups=["interactable"]]
+script = ExtResource("1_hkrh1")
+
+[node name="Visuals" type="Node3D" parent="." unique_id=485636622]
+
+[node name="RippleOuter" type="MeshInstance3D" parent="Visuals" unique_id=36624378]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+mesh = SubResource("TorusMesh_y6f4v")
+
+[node name="RippleInner" type="MeshInstance3D" parent="Visuals" unique_id=243556775]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+mesh = SubResource("TorusMesh_hkrh1")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1470229587]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=165063755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("SphereShape3D_wvobx")

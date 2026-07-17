@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ds8vabn6xqdta" path="res://scenes/tree.tscn" id="5_mm0a5"]
 [ext_resource type="PackedScene" uid="uid://q3tcuc7hayiq" path="res://collectibles/glowcap.tscn" id="6_o6wi6"]
 [ext_resource type="PackedScene" uid="uid://ccm1otwmgol3k" path="res://scenes/log.tscn" id="7_emj6c"]
+[ext_resource type="PackedScene" uid="uid://blycqg6nbncik" path="res://scenes/fishing_ripple.tscn" id="8_mrac1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rm7dq"]
 size = Vector3(20, 0.5, 20)
@@ -189,8 +190,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_degyb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.15, 5)
 shape = SubResource("BoxShape3D_fma6k")
 
-[node name="Log" parent="Pond" unique_id=1102686436 instance=ExtResource("7_emj6c")]
-transform = Transform3D(0.9340153, 0, 0.35723308, 0, 1, 0, -0.35723308, 0, 0.9340153, 1.7146206, 0.6500001, 6.94933)
-
 [node name="Log" parent="." unique_id=690488448 instance=ExtResource("7_emj6c")]
 transform = Transform3D(0.97213703, 0, -0.23441325, 0, 1, 0, 0.23441325, 0, 0.97213703, -7.8589196, 0.6500001, -3.9851398)
+
+[node name="Log2" parent="." unique_id=1102686436 instance=ExtResource("7_emj6c")]
+transform = Transform3D(0.9340152, 0, 0.3572331, 0, 1, 0, -0.3572331, 0, 0.9340152, 1.7146211, 0.6500001, 6.9493303)
+
+[node name="FishingRipple" parent="." unique_id=491645407 instance=ExtResource("8_mrac1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5363922, 0.26999998, 3.209821)
